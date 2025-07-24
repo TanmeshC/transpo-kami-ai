@@ -20,6 +20,19 @@ import {
 const RoutePlanner = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [showResults, setShowResults] = useState(false);
+
+  const handleFindRoutes = () => {
+    if (from.trim() && to.trim()) {
+      setShowResults(true);
+    } else {
+      alert("Please enter both start and destination locations");
+    }
+  };
+
+  const handleSelectRoute = (routeId: number) => {
+    alert(`Route ${routeId} selected! Navigation would start in a real app.`);
+  };
 
   const routeOptions = [
     {
@@ -82,7 +95,7 @@ const RoutePlanner = () => {
   };
 
   return (
-    <div className="py-16 px-6 bg-background">
+    <div id="route-planner" className="py-16 px-6 bg-background">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Smart Route Planner</h2>
@@ -121,7 +134,11 @@ const RoutePlanner = () => {
             </div>
             
             <div className="flex items-end">
-              <Button variant="hero" className="w-full">
+              <Button 
+                variant="hero" 
+                className="w-full"
+                onClick={handleFindRoutes}
+              >
                 <Zap className="w-4 h-4 mr-2" />
                 Find Routes
               </Button>
@@ -130,6 +147,7 @@ const RoutePlanner = () => {
         </Card>
 
         {/* Route Options */}
+        {showResults && (
         <div className="space-y-4">
           {routeOptions.map((route) => (
             <Card key={route.id} className={`p-6 shadow-card hover:shadow-transport transition-all duration-300 ${route.recommended ? 'ring-2 ring-primary/20' : ''}`}>
@@ -155,7 +173,11 @@ const RoutePlanner = () => {
                   </div>
                 </div>
 
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => handleSelectRoute(route.id)}
+                >
                   Select Route
                 </Button>
               </div>
@@ -216,6 +238,7 @@ const RoutePlanner = () => {
             </Card>
           ))}
         </div>
+        )}
       </div>
     </div>
   );

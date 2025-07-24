@@ -82,7 +82,7 @@ const TransportMap = () => {
   };
 
   return (
-    <div className="py-16 px-6 bg-gradient-data min-h-screen">
+    <div id="transport-map" className="py-16 px-6 bg-gradient-data min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Interactive Transport Map</h2>
@@ -237,7 +237,11 @@ const TransportMap = () => {
                 <div className="text-sm text-muted-foreground">
                   Last updated: 2 seconds ago
                 </div>
-                <Button variant="hero" size="sm">
+                <Button 
+                  variant="hero" 
+                  size="sm"
+                  onClick={() => alert("Full screen map would open in a real app")}
+                >
                   <Zap className="w-4 h-4 mr-2" />
                   Full Screen Map
                 </Button>

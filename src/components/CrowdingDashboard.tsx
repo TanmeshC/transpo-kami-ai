@@ -14,6 +14,10 @@ import {
 } from "lucide-react";
 
 const CrowdingDashboard = () => {
+  const handleViewDetails = (locationId: number) => {
+    // Simulate showing more details
+    alert(`Viewing detailed analytics for location ${locationId}`);
+  };
   const crowdingData = [
     {
       id: 1,
@@ -73,7 +77,7 @@ const CrowdingDashboard = () => {
   };
 
   return (
-    <div className="py-16 px-6 bg-gradient-data min-h-screen">
+    <div id="crowding-dashboard" className="py-16 px-6 bg-gradient-data min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Live Crowding Dashboard</h2>
@@ -175,7 +179,11 @@ const CrowdingDashboard = () => {
                     </div>
                   </div>
 
-                  <Button variant="data" size="sm">
+                  <Button 
+                    variant="data" 
+                    size="sm"
+                    onClick={() => handleViewDetails(item.id)}
+                  >
                     View Details
                   </Button>
                 </div>
@@ -184,9 +192,17 @@ const CrowdingDashboard = () => {
           ))}
         </div>
 
-        {/* Action Button */}
         <div className="text-center mt-12">
-          <Button variant="hero" size="lg">
+          <Button 
+            variant="hero" 
+            size="lg"
+            onClick={() => {
+              document.getElementById('transport-map')?.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }}
+          >
             <MapPin className="w-5 h-5 mr-2" />
             View Interactive Map
           </Button>

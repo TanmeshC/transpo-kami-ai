@@ -68,11 +68,31 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          <Button variant="hero" size="lg" className="text-lg px-8 py-6">
+          <Button 
+            variant="hero" 
+            size="lg" 
+            className="text-lg px-8 py-6"
+            onClick={() => {
+              document.getElementById('route-planner')?.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }}
+          >
             Plan Your Route
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
-          <Button variant="outline" size="lg" className="text-lg px-8 py-6">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="text-lg px-8 py-6"
+            onClick={() => {
+              document.getElementById('crowding-dashboard')?.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }}
+          >
             View Live Data
           </Button>
         </div>
