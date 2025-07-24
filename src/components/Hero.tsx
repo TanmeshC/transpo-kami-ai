@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, MapPin, Clock, Users, TrendingUp } from "lucide-react";
-import heroImage from "@/assets/transport-hero.jpg";
+import heroImage from "@/assets/pune-transport-hero.jpg";
 
 const Hero = () => {
   return (
@@ -10,10 +10,10 @@ const Hero = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Smart Transport Network"
+          alt="Pune Smart Transport Network"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/70 to-secondary/90" />
+        <div className="absolute inset-0 bg-gradient-indian opacity-90" />
       </div>
 
       {/* Floating Data Cards */}
@@ -23,8 +23,8 @@ const Hero = () => {
             <Users className="w-5 h-5" />
             <span className="text-sm font-medium">Live Crowding</span>
           </div>
-          <div className="text-2xl font-bold text-white mt-1">67%</div>
-          <div className="text-xs text-white/80">Platform 3 - Metro</div>
+          <div className="text-2xl font-bold text-white mt-1">72%</div>
+          <div className="text-xs text-white/80">Pune Metro - Vanaz</div>
         </div>
       </div>
 
@@ -34,8 +34,8 @@ const Hero = () => {
             <Clock className="w-5 h-5" />
             <span className="text-sm font-medium">Next Arrival</span>
           </div>
-          <div className="text-2xl font-bold text-white mt-1">3 min</div>
-          <div className="text-xs text-white/80">Bus Line 42</div>
+          <div className="text-2xl font-bold text-white mt-1">4 min</div>
+          <div className="text-xs text-white/80">PMPML Bus - Route 4</div>
         </div>
       </div>
 
@@ -45,8 +45,8 @@ const Hero = () => {
             <TrendingUp className="w-5 h-5" />
             <span className="text-sm font-medium">Route Efficiency</span>
           </div>
-          <div className="text-2xl font-bold text-white mt-1">94%</div>
-          <div className="text-xs text-white/80">Optimal Path Found</div>
+          <div className="text-2xl font-bold text-white mt-1">96%</div>
+          <div className="text-xs text-white/80">FC Road to Deccan</div>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ const Hero = () => {
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         <Badge className="mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30">
           <MapPin className="w-4 h-4 mr-2" />
-          AI-Powered Urban Mobility
+          पुणे स्मार्ट मोबिलिटी | Pune Smart Mobility
         </Badge>
         
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-slide-up">
@@ -64,7 +64,7 @@ const Hero = () => {
         </h1>
         
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          Smart crowding prediction and route optimization for seamless urban transport
+          Smart crowding prediction for PMPML buses, Pune Metro, and auto-rickshaws
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
@@ -79,7 +79,7 @@ const Hero = () => {
               });
             }}
           >
-            Plan Your Route
+            Plan Pune Route | रूट प्लान करा
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
           <Button 
@@ -93,23 +93,23 @@ const Hero = () => {
               });
             }}
           >
-            View Live Data
+            Live Data | लाइव्ह डेटा
           </Button>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-8 mt-16 animate-slide-up" style={{ animationDelay: '0.3s' }}>
           <div className="text-center">
-            <div className="text-3xl font-bold text-white">500K+</div>
-            <div className="text-white/80">Daily Predictions</div>
+            <div className="text-3xl font-bold text-white">8L+</div>
+            <div className="text-white/80">Daily Pune Commuters</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-white">98%</div>
-            <div className="text-white/80">Accuracy Rate</div>
+            <div className="text-3xl font-bold text-white">97%</div>
+            <div className="text-white/80">PMPML Route Accuracy</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-white">15min</div>
-            <div className="text-white/80">Avg Time Saved</div>
+            <div className="text-3xl font-bold text-white">20min</div>
+            <div className="text-white/80">Avg Time Saved Daily</div>
           </div>
         </div>
       </div>

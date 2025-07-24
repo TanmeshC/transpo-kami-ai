@@ -21,17 +21,17 @@ const CrowdingDashboard = () => {
   const crowdingData = [
     {
       id: 1,
-      location: "Central Station - Platform 2",
+      location: "पुणे रेल्वे स्टेशन | Pune Railway Station",
       type: "metro",
       crowding: 89,
       status: "high",
       nextArrival: "2 min",
       trend: "up",
-      prediction: "Peak until 9:30 AM"
+      prediction: "Peak until 10:00 AM"
     },
     {
       id: 2,
-      location: "Broadway Bus Stop",
+      location: "FC Road - फर्ग्युसन कॉलेज रोड",
       type: "bus",
       crowding: 34,
       status: "low",
@@ -41,23 +41,33 @@ const CrowdingDashboard = () => {
     },
     {
       id: 3,
-      location: "Tech District Hub",
+      location: "Hinjewadi IT Park - हिंजेवाडी",
       type: "metro",
-      crowding: 67,
-      status: "medium",
+      crowding: 82,
+      status: "high",
       nextArrival: "1 min",
       trend: "up",
-      prediction: "Increasing rapidly"
+      prediction: "Tech crowd peak time"
     },
     {
       id: 4,
-      location: "University Campus",
+      location: "University of Pune - पुणे विद्यापीठ",
       type: "bus",
-      crowding: 78,
-      status: "high",
+      crowding: 67,
+      status: "medium",
       nextArrival: "7 min",
       trend: "down",
-      prediction: "Peak ending soon"
+      prediction: "Student rush ending"
+    },
+    {
+      id: 5,
+      location: "Deccan Gymkhana - डेक्कन जिमखाना",
+      type: "bus",
+      crowding: 45,
+      status: "medium",
+      nextArrival: "3 min",
+      trend: "up",
+      prediction: "Evening crowd building"
     }
   ];
 
@@ -80,9 +90,9 @@ const CrowdingDashboard = () => {
     <div id="crowding-dashboard" className="py-16 px-6 bg-gradient-data min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Live Crowding Dashboard</h2>
+          <h2 className="text-4xl font-bold mb-4">Live Pune Transport | लाइव्ह पुणे वाहतूक</h2>
           <p className="text-muted-foreground text-lg">
-            Real-time transport capacity and intelligent predictions
+            Real-time PMPML buses, Metro, and auto-rickshaw capacity
           </p>
         </div>
 
@@ -91,8 +101,8 @@ const CrowdingDashboard = () => {
           <Card className="p-6 shadow-card hover:shadow-transport transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Active Routes</p>
-                <p className="text-2xl font-bold">1,247</p>
+                <p className="text-sm text-muted-foreground">PMPML Routes</p>
+                <p className="text-2xl font-bold">320</p>
               </div>
               <Bus className="w-8 h-8 text-primary" />
             </div>
@@ -102,7 +112,7 @@ const CrowdingDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Avg Crowding</p>
-                <p className="text-2xl font-bold">62%</p>
+                <p className="text-2xl font-bold">68%</p>
               </div>
               <Users className="w-8 h-8 text-secondary" />
             </div>
@@ -112,7 +122,7 @@ const CrowdingDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Predictions</p>
-                <p className="text-2xl font-bold">98.7%</p>
+                <p className="text-2xl font-bold">96.8%</p>
               </div>
               <Zap className="w-8 h-8 text-accent" />
             </div>
@@ -121,8 +131,8 @@ const CrowdingDashboard = () => {
           <Card className="p-6 shadow-card hover:shadow-transport transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Alerts Active</p>
-                <p className="text-2xl font-bold">3</p>
+                <p className="text-sm text-muted-foreground">Traffic Alerts</p>
+                <p className="text-2xl font-bold">5</p>
               </div>
               <AlertTriangle className="w-8 h-8 text-destructive" />
             </div>
@@ -202,10 +212,10 @@ const CrowdingDashboard = () => {
                 block: 'start'
               });
             }}
-          >
-            <MapPin className="w-5 h-5 mr-2" />
-            View Interactive Map
-          </Button>
+            >
+              <MapPin className="w-5 h-5 mr-2" />
+              View Pune Map | पुणे नकाशा पहा
+            </Button>
         </div>
       </div>
     </div>

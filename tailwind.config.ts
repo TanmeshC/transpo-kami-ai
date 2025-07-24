@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['Poppins', 'system-ui', 'sans-serif'],
+				'hindi': ['Noto Sans Devanagari', 'system-ui', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -68,7 +72,8 @@ export default {
 				'gradient-primary': 'var(--gradient-primary)',
 				'gradient-secondary': 'var(--gradient-secondary)',
 				'gradient-hero': 'var(--gradient-hero)',
-				'gradient-data': 'var(--gradient-data)'
+				'gradient-data': 'var(--gradient-data)',
+				'gradient-indian': 'var(--gradient-indian)'
 			},
 			boxShadow: {
 				'transport': 'var(--shadow-transport)',

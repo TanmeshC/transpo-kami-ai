@@ -27,7 +27,7 @@ const TransportMap = () => {
   const transportNodes = [
     {
       id: 1,
-      name: "Central Station",
+      name: "Pune Railway Station",
       type: "metro",
       position: { x: 45, y: 30 },
       crowding: 89,
@@ -36,38 +36,47 @@ const TransportMap = () => {
     },
     {
       id: 2,
-      name: "Tech District",
+      name: "Hinjewadi IT Park",
       type: "metro", 
-      position: { x: 65, y: 45 },
-      crowding: 67,
-      status: "medium",
-      alerts: 0
-    },
-    {
-      id: 3,
-      name: "University Hub",
-      type: "bus",
-      position: { x: 25, y: 60 },
-      crowding: 78,
+      position: { x: 20, y: 40 },
+      crowding: 82,
       status: "high",
       alerts: 0
     },
     {
-      id: 4,
-      name: "Downtown Plaza",
-      type: "metro",
-      position: { x: 55, y: 70 },
+      id: 3,
+      name: "FC Road",
+      type: "bus",
+      position: { x: 55, y: 50 },
       crowding: 34,
       status: "low",
       alerts: 0
     },
     {
-      id: 5,
-      name: "Airport Express",
+      id: 4,
+      name: "Deccan Gymkhana",
       type: "bus",
-      position: { x: 80, y: 25 },
+      position: { x: 50, y: 65 },
       crowding: 45,
       status: "medium",
+      alerts: 0
+    },
+    {
+      id: 5,
+      name: "University of Pune",
+      type: "bus",
+      position: { x: 65, y: 35 },
+      crowding: 67,
+      status: "medium",
+      alerts: 0
+    },
+    {
+      id: 6,
+      name: "Swargate Bus Stand",
+      type: "bus",
+      position: { x: 70, y: 70 },
+      crowding: 78,
+      status: "high",
       alerts: 2
     }
   ];
@@ -85,9 +94,9 @@ const TransportMap = () => {
     <div id="transport-map" className="py-16 px-6 bg-gradient-data min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Interactive Transport Map</h2>
+          <h2 className="text-4xl font-bold mb-4">Pune Transport Map | पुणे वाहतूक नकाशा</h2>
           <p className="text-muted-foreground text-lg">
-            Real-time visualization of urban mobility patterns
+            Real-time visualization of Pune's mobility network
           </p>
         </div>
 
@@ -243,7 +252,7 @@ const TransportMap = () => {
                   onClick={() => alert("Full screen map would open in a real app")}
                 >
                   <Zap className="w-4 h-4 mr-2" />
-                  Full Screen Map
+                  Full Map | संपूर्ण नकाशा
                 </Button>
               </div>
             </Card>

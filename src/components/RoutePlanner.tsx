@@ -37,42 +37,42 @@ const RoutePlanner = () => {
   const routeOptions = [
     {
       id: 1,
-      duration: "23 min",
-      cost: "$3.50",
+      duration: "25 min",
+      cost: "₹35",
       crowding: 42,
       efficiency: 94,
       modes: ["metro", "bus"],
       emissions: "Low",
       steps: [
-        { mode: "metro", duration: "15 min", line: "Blue Line", crowding: 38 },
-        { mode: "bus", duration: "8 min", line: "Route 42", crowding: 46 }
+        { mode: "metro", duration: "18 min", line: "Blue Line (Vanaz to Ramwadi)", crowding: 38 },
+        { mode: "bus", duration: "7 min", line: "PMPML Route 4", crowding: 46 }
       ],
       recommended: true
     },
     {
       id: 2,
-      duration: "31 min",
-      cost: "$2.80",
+      duration: "35 min",
+      cost: "₹25",
       crowding: 67,
       efficiency: 78,
       modes: ["bus", "bus"],
       emissions: "Medium",
       steps: [
-        { mode: "bus", duration: "18 min", line: "Route 15", crowding: 72 },
-        { mode: "bus", duration: "13 min", line: "Route 8", crowding: 62 }
+        { mode: "bus", duration: "20 min", line: "PMPML Route 15 (Swargate-Kothrud)", crowding: 72 },
+        { mode: "bus", duration: "15 min", line: "PMPML Route 8 (Deccan-Hinjewadi)", crowding: 62 }
       ],
       recommended: false
     },
     {
       id: 3,
-      duration: "19 min",
-      cost: "$4.20",
+      duration: "22 min",
+      cost: "₹40",
       crowding: 28,
       efficiency: 87,
       modes: ["metro"],
       emissions: "Low",
       steps: [
-        { mode: "metro", duration: "19 min", line: "Express Green", crowding: 28 }
+        { mode: "metro", duration: "22 min", line: "Purple Line Express (Pune Station-Hinjewadi)", crowding: 28 }
       ],
       recommended: false
     }
@@ -98,9 +98,9 @@ const RoutePlanner = () => {
     <div id="route-planner" className="py-16 px-6 bg-background">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Smart Route Planner</h2>
+          <h2 className="text-4xl font-bold mb-4">Pune Route Planner | पुणे रूट प्लॅनर</h2>
           <p className="text-muted-foreground text-lg">
-            AI-optimized routes with real-time crowding insights
+            PMPML buses, Metro, and auto-rickshaw route optimization
           </p>
         </div>
 
@@ -112,7 +112,7 @@ const RoutePlanner = () => {
               <div className="relative">
                 <MapPin className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Enter start location"
+                  placeholder="e.g., Pune Railway Station, FC Road"
                   value={from}
                   onChange={(e) => setFrom(e.target.value)}
                   className="pl-10"
@@ -125,7 +125,7 @@ const RoutePlanner = () => {
               <div className="relative">
                 <Navigation className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Enter destination"
+                  placeholder="e.g., Hinjewadi, Deccan Gymkhana"
                   value={to}
                   onChange={(e) => setTo(e.target.value)}
                   className="pl-10"
@@ -140,7 +140,7 @@ const RoutePlanner = () => {
                 onClick={handleFindRoutes}
               >
                 <Zap className="w-4 h-4 mr-2" />
-                Find Routes
+                Find Routes | रूट शोधा
               </Button>
             </div>
           </div>
