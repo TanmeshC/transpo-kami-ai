@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -10,14 +12,13 @@ import {
   TrendingDown,
   Train,
   Bus,
-  Zap
+  Zap,
+  Eye
 } from "lucide-react";
 
 const CrowdingDashboard = () => {
-  const handleViewDetails = (locationId: number) => {
-    // Simulate showing more details
-    alert(`Viewing detailed analytics for location ${locationId}`);
-  };
+  const [selectedNode, setSelectedNode] = useState<number | null>(null);
+  const { toast } = useToast();
   const crowdingData = [
     {
       id: 1,
@@ -192,12 +193,59 @@ const CrowdingDashboard = () => {
                   <Button 
                     variant="data" 
                     size="sm"
-                    onClick={() => handleViewDetails(item.id)}
+                    onClick={() => {
+                      setSelectedNode(selectedNode === item.id ? null : item.id);
+                      toast({
+                        title: "Station Details",
+                        description: `${selectedNode === item.id ? 'Hiding' : 'Viewing'} details for ${item.location.split(' | ')[1] || item.location}`
+                      });
+                    }}
                   >
-                    View Details
+                    <Eye className="w-4 h-4 mr-2" />
+                    {selectedNode === item.id ? "Hide Details" : "View Details | विवरण देखें"}
                   </Button>
                 </div>
               </div>
+              
+              {/* Detailed Information Panel */}
+              {selectedNode === item.id && (
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg border-l-4 border-primary">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="font-medium">Operating Hours:</span>
+                      <p className="text-muted-foreground">5:30 AM - 11:30 PM</p>
+                    </div>
+                    <div>
+                      <span className="font-medium">Next Arrival:</span>
+                      <p className="text-muted-foreground">{item.nextArrival}</p>
+                    </div>
+                    <div>
+                      <span className="font-medium">Platform/Stop:</span>
+                      <p className="text-muted-foreground">Platform {Math.floor(Math.random() * 4) + 1}</p>
+                    </div>
+                    <div>
+                      <span className="font-medium">Accessibility:</span>
+                      <p className="text-muted-foreground">Wheelchair accessible</p>
+                    </div>
+                    <div>
+                      <span className="font-medium">Current Status:</span>
+                      <p className="text-muted-foreground">On time</p>
+                    </div>
+                    <div>
+                      <span className="font-medium">Peak Hours:</span>
+                      <p className="text-muted-foreground">8-10 AM, 6-8 PM</p>
+                    </div>
+                    <div>
+                      <span className="font-medium">Fare from here:</span>
+                      <p className="text-muted-foreground">₹10 - ₹35</p>
+                    </div>
+                    <div>
+                      <span className="font-medium">Trend Prediction:</span>
+                      <p className="text-muted-foreground">{item.prediction}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </Card>
           ))}
         </div>

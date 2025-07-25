@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,8 +19,10 @@ import 'leaflet/dist/leaflet.css';
 
 const TransportMap = () => {
   const [selectedLayer, setSelectedLayer] = useState("crowding");
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
+  const { toast } = useToast();
 
   const mapLayers = [
     { id: "crowding", label: "Crowding", icon: Users },
@@ -205,8 +208,8 @@ const TransportMap = () => {
 
           {/* Interactive Map */}
           <div className="lg:col-span-3">
-            <Card className="p-6 shadow-card">
-              <div className="relative rounded-lg h-96 overflow-hidden">
+            <Card className={`p-6 shadow-card ${isFullScreen ? 'fixed inset-4 z-50' : ''}`}>
+              <div className={`relative rounded-lg overflow-hidden ${isFullScreen ? 'h-full' : 'h-96'}`}>
                 <div ref={mapContainer} className="absolute inset-0" />
                 
                 {/* Real-time Data Overlay */}
@@ -226,10 +229,19 @@ const TransportMap = () => {
                 <Button 
                   variant="hero" 
                   size="sm"
-                  onClick={() => alert("Full screen map would open in a real app")}
+                  onClick={() => {
+                    setIsFullScreen(!isFullScreen);
+                    setTimeout(() => {
+                      map.current?.invalidateSize();
+                    }, 100);
+                    toast({
+                      title: isFullScreen ? "Map Minimized" : "Map Expanded",
+                      description: isFullScreen ? "Map view returned to normal" : "Map expanded for better view"
+                    });
+                  }}
                 >
                   <Zap className="w-4 h-4 mr-2" />
-                  Full Map | संपूर्ण नकाशा
+                  {isFullScreen ? "Exit Full Map" : "Full Map | संपूर्ण नकाशा"}
                 </Button>
               </div>
             </Card>
