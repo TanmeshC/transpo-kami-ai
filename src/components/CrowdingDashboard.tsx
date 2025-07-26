@@ -25,9 +25,10 @@ const CrowdingDashboard = () => {
       type: "metro",
       crowding: 89,
       status: "high",
-      nextArrival: "2 min",
+      nextArrival: 120, // seconds
       trend: "up",
-      prediction: "Peak until 10:00 AM"
+      prediction: "Peak until 10:00 AM",
+      baseCrowding: 45 // base crowding level
     },
     {
       id: 2,
@@ -35,9 +36,10 @@ const CrowdingDashboard = () => {
       type: "bus",
       crowding: 34,
       status: "low",
-      nextArrival: "5 min",
+      nextArrival: 300, // seconds
       trend: "down",
-      prediction: "Light throughout morning"
+      prediction: "Light throughout morning",
+      baseCrowding: 25
     },
     {
       id: 3,
@@ -45,9 +47,10 @@ const CrowdingDashboard = () => {
       type: "metro",
       crowding: 82,
       status: "high",
-      nextArrival: "1 min",
+      nextArrival: 60, // seconds
       trend: "up",
-      prediction: "Tech crowd peak time"
+      prediction: "Tech crowd peak time",
+      baseCrowding: 40
     },
     {
       id: 4,
@@ -55,9 +58,10 @@ const CrowdingDashboard = () => {
       type: "bus",
       crowding: 67,
       status: "medium",
-      nextArrival: "7 min",
+      nextArrival: 420, // seconds
       trend: "down",
-      prediction: "Student rush ending"
+      prediction: "Student rush ending",
+      baseCrowding: 35
     },
     {
       id: 5,
@@ -65,33 +69,64 @@ const CrowdingDashboard = () => {
       type: "bus",
       crowding: 45,
       status: "medium",
-      nextArrival: "3 min",
+      nextArrival: 180, // seconds
       trend: "up",
-      prediction: "Evening crowd building"
+      prediction: "Evening crowd building",
+      baseCrowding: 30
     }
   ]);
   const { toast } = useToast();
 
-  // Simulate real-time data updates
+  // Helper function to get time-based crowding multiplier
+  const getTimeBasedMultiplier = () => {
+    const now = new Date();
+    const hour = now.getHours();
+    
+    // Morning rush: 7-10 AM
+    if (hour >= 7 && hour <= 9) return 1.8;
+    // Evening rush: 6-9 PM
+    if (hour >= 18 && hour <= 20) return 1.7;
+    // Lunch time: 12-2 PM
+    if (hour >= 12 && hour <= 14) return 1.3;
+    // Late night: 11 PM - 6 AM
+    if (hour >= 23 || hour <= 6) return 0.3;
+    // Regular day time
+    return 1.0;
+  };
+
+  // Format seconds to readable time
+  const formatArrivalTime = (seconds: number) => {
+    if (seconds < 60) return `${seconds}s`;
+    const minutes = Math.floor(seconds / 60);
+    return `${minutes} min`;
+  };
+
+  // Real-time updates based on actual time
   useEffect(() => {
     const interval = setInterval(() => {
       setCrowdingData(prevData => 
         prevData.map(item => {
-          // Randomly fluctuate crowding by ±8%
-          const crowdingChange = Math.floor(Math.random() * 17) - 8;
-          const newCrowding = Math.max(0, Math.min(100, item.crowding + crowdingChange));
+          // Calculate realistic crowding based on time
+          const timeMultiplier = getTimeBasedMultiplier();
+          const randomVariation = 1 + (Math.random() - 0.5) * 0.2; // ±10% variation
+          const newCrowding = Math.round(
+            Math.min(95, Math.max(5, item.baseCrowding * timeMultiplier * randomVariation))
+          );
           
           // Update status based on new crowding
           let newStatus = "low";
           if (newCrowding > 75) newStatus = "high";
           else if (newCrowding > 50) newStatus = "medium";
           
-          // Update trend
-          const newTrend = crowdingChange >= 0 ? "up" : "down";
+          // Calculate trend based on previous crowding
+          const newTrend = newCrowding > item.crowding ? "up" : "down";
           
-          // Update arrival time randomly
-          const arrivalTimes = ["1 min", "2 min", "3 min", "4 min", "5 min", "6 min", "7 min"];
-          const newArrival = arrivalTimes[Math.floor(Math.random() * arrivalTimes.length)];
+          // Countdown arrival time (decrease by 1 second, reset when reaches 0)
+          let newArrival = item.nextArrival - 1;
+          if (newArrival <= 0) {
+            // Reset to random arrival time between 30 seconds and 8 minutes
+            newArrival = Math.floor(Math.random() * 450) + 30;
+          }
           
           return {
             ...item,
@@ -102,7 +137,7 @@ const CrowdingDashboard = () => {
           };
         })
       );
-    }, 4000); // Update every 4 seconds
+    }, 1000); // Update every second for realistic countdown
 
     return () => clearInterval(interval);
   }, []);
@@ -195,7 +230,7 @@ const CrowdingDashboard = () => {
                       <div className="flex items-center space-x-1">
                         <Clock className="w-4 h-4 text-muted-foreground" />
                         <span className="text-sm text-muted-foreground">
-                          Next: {item.nextArrival}
+                          Next: {formatArrivalTime(item.nextArrival)}
                         </span>
                       </div>
                       <div className="flex items-center space-x-1">
@@ -252,7 +287,7 @@ const CrowdingDashboard = () => {
                     </div>
                     <div>
                       <span className="font-medium">Next Arrival:</span>
-                      <p className="text-muted-foreground">{item.nextArrival}</p>
+                      <p className="text-muted-foreground">{formatArrivalTime(item.nextArrival)}</p>
                     </div>
                     <div>
                       <span className="font-medium">Platform/Stop:</span>
