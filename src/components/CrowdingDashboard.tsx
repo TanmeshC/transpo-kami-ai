@@ -25,10 +25,10 @@ const CrowdingDashboard = () => {
       type: "metro",
       crowding: 89,
       status: "high",
-      nextArrival: 120, // seconds
+      nextArrival: 120,
       trend: "up",
       prediction: "Peak until 10:00 AM",
-      baseCrowding: 45 // base crowding level
+      baseCrowding: 45
     },
     {
       id: 2,
@@ -36,7 +36,7 @@ const CrowdingDashboard = () => {
       type: "bus",
       crowding: 34,
       status: "low",
-      nextArrival: 300, // seconds
+      nextArrival: 300,
       trend: "down",
       prediction: "Light throughout morning",
       baseCrowding: 25
@@ -47,7 +47,7 @@ const CrowdingDashboard = () => {
       type: "metro",
       crowding: 82,
       status: "high",
-      nextArrival: 60, // seconds
+      nextArrival: 60,
       trend: "up",
       prediction: "Tech crowd peak time",
       baseCrowding: 40
@@ -58,7 +58,7 @@ const CrowdingDashboard = () => {
       type: "bus",
       crowding: 67,
       status: "medium",
-      nextArrival: 420, // seconds
+      nextArrival: 420,
       trend: "down",
       prediction: "Student rush ending",
       baseCrowding: 35
@@ -69,10 +69,87 @@ const CrowdingDashboard = () => {
       type: "bus",
       crowding: 45,
       status: "medium",
-      nextArrival: 180, // seconds
+      nextArrival: 180,
       trend: "up",
       prediction: "Evening crowd building",
       baseCrowding: 30
+    },
+    {
+      id: 6,
+      location: "Pimpri Station - पिंपरी स्टेशन (PCMC)",
+      type: "metro",
+      crowding: 76,
+      status: "high",
+      nextArrival: 90,
+      trend: "up",
+      prediction: "PCMC commuter rush",
+      baseCrowding: 42
+    },
+    {
+      id: 7,
+      location: "Chinchwad - चिंचवड (PCMC)",
+      type: "bus",
+      crowding: 58,
+      status: "medium",
+      nextArrival: 240,
+      trend: "up",
+      prediction: "Industrial area traffic",
+      baseCrowding: 32
+    },
+    {
+      id: 8,
+      location: "Wakad IT Hub - वाकड (PCMC)",
+      type: "bus",
+      crowding: 71,
+      status: "medium",
+      nextArrival: 150,
+      trend: "up",
+      prediction: "IT professionals commute",
+      baseCrowding: 38
+    },
+    {
+      id: 9,
+      location: "Aundh - औंध (PCMC)",
+      type: "metro",
+      crowding: 63,
+      status: "medium",
+      nextArrival: 200,
+      trend: "down",
+      prediction: "Residential area moderate",
+      baseCrowding: 36
+    },
+    {
+      id: 10,
+      location: "Baner - बानेर (PCMC)",
+      type: "bus",
+      crowding: 55,
+      status: "medium",
+      nextArrival: 320,
+      trend: "up",
+      prediction: "IT corridor busy",
+      baseCrowding: 33
+    },
+    {
+      id: 11,
+      location: "Nigdi - निगडी (PCMC)",
+      type: "bus",
+      crowding: 41,
+      status: "low",
+      nextArrival: 280,
+      trend: "down",
+      prediction: "Suburban area light",
+      baseCrowding: 28
+    },
+    {
+      id: 12,
+      location: "Bhosari - भोसरी (PCMC)",
+      type: "metro",
+      crowding: 69,
+      status: "medium",
+      nextArrival: 110,
+      trend: "up",
+      prediction: "Industrial commute peak",
+      baseCrowding: 37
     }
   ]);
   const { toast } = useToast();
@@ -319,6 +396,33 @@ const CrowdingDashboard = () => {
             </Card>
           ))}
         </div>
+
+        {/* Data Source Information */}
+        <Card className="mt-8 p-6 shadow-card bg-muted/20 border-l-4 border-accent">
+          <div className="flex items-start space-x-4">
+            <AlertTriangle className="w-6 h-6 text-accent mt-1" />
+            <div>
+              <h3 className="font-semibold text-lg mb-2">Data Source Information | डेटा स्रोत माहिती</h3>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <p>
+                  <span className="font-medium">⚠️ Demo Data:</span> This is a simulation with realistic patterns, not actual live PMPML/Metro data.
+                </p>
+                <p>
+                  <span className="font-medium">🕒 Time-based:</span> Crowding levels change based on actual time (rush hours: 7-10 AM, 6-9 PM).
+                </p>
+                <p>
+                  <span className="font-medium">🔄 Real-time simulation:</span> Updates every second to demonstrate how a real system would work.
+                </p>
+                <p>
+                  <span className="font-medium">📍 Areas covered:</span> Pune city + PCMC regions (Pimpri-Chinchwad Municipal Corporation).
+                </p>
+                <p className="mt-3 text-xs">
+                  <span className="font-medium">For real data integration:</span> Would require APIs from PMPML, Pune Metro, traffic management systems, and IoT sensors at stations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Card>
 
         <div className="text-center mt-12">
           <Button 
