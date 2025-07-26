@@ -18,18 +18,10 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const TransportMap = () => {
-  const [selectedLayer, setSelectedLayer] = useState("crowding");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const { toast } = useToast();
-
-  const mapLayers = [
-    { id: "crowding", label: "Crowding", icon: Users },
-    { id: "delays", label: "Delays", icon: Clock },
-    { id: "routes", label: "Routes", icon: MapPin },
-    { id: "alerts", label: "Alerts", icon: AlertTriangle }
-  ];
 
   const transportNodes = [
     {
@@ -157,57 +149,9 @@ const TransportMap = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Map Controls */}
-          <Card className="p-6 shadow-card h-fit">
-            <h3 className="font-semibold mb-4 flex items-center">
-              <Layers className="w-5 h-5 mr-2" />
-              Map Layers
-            </h3>
-            
-            <div className="space-y-2 mb-6">
-              {mapLayers.map((layer) => (
-                <Button
-                  key={layer.id}
-                  variant={selectedLayer === layer.id ? "default" : "outline"}
-                  size="sm"
-                  className="w-full justify-start"
-                  onClick={() => setSelectedLayer(layer.id)}
-                >
-                  <layer.icon className="w-4 h-4 mr-2" />
-                  {layer.label}
-                </Button>
-              ))}
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium mb-2">Legend</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-destructive"></div>
-                    <span>High Crowding (75%+)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-accent"></div>
-                    <span>Medium Crowding (50-75%)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-secondary"></div>
-                    <span>Low Crowding (under 50%)</span>
-                  </div>
-                </div>
-              </div>
-
-              <Button variant="data" size="sm" className="w-full">
-                <Filter className="w-4 h-4 mr-2" />
-                Filter Options
-              </Button>
-            </div>
-          </Card>
-
+        <div className="grid grid-cols-1 gap-6">
           {/* Interactive Map */}
-          <div className="lg:col-span-3">
+          <div className="w-full">
             <Card className={`p-6 shadow-card ${isFullScreen ? 'fixed inset-4 z-50' : ''}`}>
               <div className={`relative rounded-lg overflow-hidden ${isFullScreen ? 'h-full' : 'h-96'}`}>
                 <div ref={mapContainer} className="absolute inset-0" />
