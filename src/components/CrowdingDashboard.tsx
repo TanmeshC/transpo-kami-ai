@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -18,8 +18,7 @@ import {
 
 const CrowdingDashboard = () => {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
-  const { toast } = useToast();
-  const crowdingData = [
+  const [crowdingData, setCrowdingData] = useState([
     {
       id: 1,
       location: "पुणे रेल्वे स्टेशन | Pune Railway Station",
@@ -70,7 +69,43 @@ const CrowdingDashboard = () => {
       trend: "up",
       prediction: "Evening crowd building"
     }
-  ];
+  ]);
+  const { toast } = useToast();
+
+  // Simulate real-time data updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCrowdingData(prevData => 
+        prevData.map(item => {
+          // Randomly fluctuate crowding by ±8%
+          const crowdingChange = Math.floor(Math.random() * 17) - 8;
+          const newCrowding = Math.max(0, Math.min(100, item.crowding + crowdingChange));
+          
+          // Update status based on new crowding
+          let newStatus = "low";
+          if (newCrowding > 75) newStatus = "high";
+          else if (newCrowding > 50) newStatus = "medium";
+          
+          // Update trend
+          const newTrend = crowdingChange >= 0 ? "up" : "down";
+          
+          // Update arrival time randomly
+          const arrivalTimes = ["1 min", "2 min", "3 min", "4 min", "5 min", "6 min", "7 min"];
+          const newArrival = arrivalTimes[Math.floor(Math.random() * arrivalTimes.length)];
+          
+          return {
+            ...item,
+            crowding: newCrowding,
+            status: newStatus,
+            trend: newTrend,
+            nextArrival: newArrival
+          };
+        })
+      );
+    }, 4000); // Update every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const getCrowdingColor = (level: number) => {
     if (level > 75) return "text-destructive";

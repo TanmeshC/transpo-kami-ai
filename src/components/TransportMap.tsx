@@ -19,11 +19,12 @@ import 'leaflet/dist/leaflet.css';
 
 const TransportMap = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(new Date());
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const { toast } = useToast();
 
-  const transportNodes = [
+  const [transportNodes, setTransportNodes] = useState([
     {
       id: 1,
       name: "Pune Railway Station",
@@ -78,7 +79,40 @@ const TransportMap = () => {
       status: "high",
       alerts: 2
     }
-  ];
+  ]);
+
+  // Simulate real-time data updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTransportNodes(prevNodes => 
+        prevNodes.map(node => {
+          // Randomly fluctuate crowding by ±5%
+          const crowdingChange = Math.floor(Math.random() * 11) - 5;
+          const newCrowding = Math.max(0, Math.min(100, node.crowding + crowdingChange));
+          
+          // Update status based on new crowding
+          let newStatus = "low";
+          if (newCrowding > 75) newStatus = "high";
+          else if (newCrowding > 50) newStatus = "medium";
+          
+          // Randomly add/remove alerts
+          const newAlerts = Math.random() > 0.8 ? Math.floor(Math.random() * 3) : node.alerts;
+          
+          return {
+            ...node,
+            crowding: newCrowding,
+            status: newStatus,
+            alerts: newAlerts
+          };
+        })
+      );
+      setLastUpdated(new Date());
+    }, 3000); // Update every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const markersRef = useRef<L.Marker[]>([]);
 
   // Initialize Leaflet map
   useEffect(() => {
@@ -92,7 +126,22 @@ const TransportMap = () => {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map.current);
 
-    // Add transport nodes as markers
+    return () => {
+      map.current?.remove();
+    };
+  }, []);
+
+  // Update markers when transport nodes change
+  useEffect(() => {
+    if (!map.current) return;
+
+    // Clear existing markers
+    markersRef.current.forEach(marker => {
+      map.current?.removeLayer(marker);
+    });
+    markersRef.current = [];
+
+    // Add updated markers
     transportNodes.forEach((node) => {
       if (!map.current) return;
 
@@ -120,15 +169,13 @@ const TransportMap = () => {
       `;
 
       // Add marker to map
-      L.marker([node.coordinates[1], node.coordinates[0]], { icon: customIcon })
+      const marker = L.marker([node.coordinates[1], node.coordinates[0]], { icon: customIcon })
         .addTo(map.current!)
         .bindPopup(popupContent);
+      
+      markersRef.current.push(marker);
     });
-
-    return () => {
-      map.current?.remove();
-    };
-  }, []);
+  }, [transportNodes]);
 
   const getNodeColor = (status: string) => {
     switch (status) {
@@ -168,7 +215,7 @@ const TransportMap = () => {
               {/* Map Actions */}
               <div className="flex justify-between items-center mt-4">
                 <div className="text-sm text-muted-foreground">
-                  Last updated: 2 seconds ago
+                  Last updated: {new Date(lastUpdated).toLocaleTimeString()}
                 </div>
                 <Button 
                   variant="hero" 
