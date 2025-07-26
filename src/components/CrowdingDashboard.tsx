@@ -397,33 +397,6 @@ const CrowdingDashboard = () => {
           ))}
         </div>
 
-        {/* Data Source Information */}
-        <Card className="mt-8 p-6 shadow-card bg-muted/20 border-l-4 border-accent">
-          <div className="flex items-start space-x-4">
-            <AlertTriangle className="w-6 h-6 text-accent mt-1" />
-            <div>
-              <h3 className="font-semibold text-lg mb-2">Data Source Information | डेटा स्रोत माहिती</h3>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <p>
-                  <span className="font-medium">⚠️ Demo Data:</span> This is a simulation with realistic patterns, not actual live PMPML/Metro data.
-                </p>
-                <p>
-                  <span className="font-medium">🕒 Time-based:</span> Crowding levels change based on actual time (rush hours: 7-10 AM, 6-9 PM).
-                </p>
-                <p>
-                  <span className="font-medium">🔄 Real-time simulation:</span> Updates every second to demonstrate how a real system would work.
-                </p>
-                <p>
-                  <span className="font-medium">📍 Areas covered:</span> Pune city + PCMC regions (Pimpri-Chinchwad Municipal Corporation).
-                </p>
-                <p className="mt-3 text-xs">
-                  <span className="font-medium">For real data integration:</span> Would require APIs from PMPML, Pune Metro, traffic management systems, and IoT sensors at stations.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
-
         <div className="text-center mt-12">
           <Button 
             variant="hero" 
