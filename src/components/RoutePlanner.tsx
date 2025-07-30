@@ -14,13 +14,17 @@ import {
   Car,
   Bike,
   ArrowRight,
-  Star
+  Star,
+  Database
 } from "lucide-react";
+import { findRoutesBetweenLocations } from "@/utils/pmpmlRoutes";
 
 const RoutePlanner = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [routeOptions, setRouteOptions] = useState([]);
 
   const generateRoutes = (from: string, to: string) => {
     // Simple route generation based on locations
@@ -65,13 +69,31 @@ const RoutePlanner = () => {
     }));
   };
 
-  const [routeOptions, setRouteOptions] = useState([]);
-
-  const handleFindRoutes = () => {
+  const handleFindRoutes = async () => {
     if (from.trim() && to.trim()) {
-      const generatedRoutes = generateRoutes(from, to);
-      setRouteOptions(generatedRoutes);
-      setShowResults(true);
+      setIsLoading(true);
+      try {
+        // First try to find real PMPML routes
+        const realRoutes = await findRoutesBetweenLocations(from, to);
+        
+        if (realRoutes.length > 0) {
+          setRouteOptions(realRoutes);
+        } else {
+          // Fallback to generated routes if no real routes found
+          const generatedRoutes = generateRoutes(from, to);
+          setRouteOptions(generatedRoutes);
+        }
+        
+        setShowResults(true);
+      } catch (error) {
+        console.error('Error finding routes:', error);
+        // Fallback to generated routes
+        const generatedRoutes = generateRoutes(from, to);
+        setRouteOptions(generatedRoutes);
+        setShowResults(true);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       alert("Please enter both start and destination locations");
     }
@@ -142,9 +164,10 @@ const RoutePlanner = () => {
                 variant="hero" 
                 className="w-full"
                 onClick={handleFindRoutes}
+                disabled={isLoading}
               >
                 <Zap className="w-4 h-4 mr-2" />
-                Find Routes | रूट शोधा
+                {isLoading ? "Finding Routes..." : "Find Routes | रूट शोधा"}
               </Button>
             </div>
           </div>
@@ -153,6 +176,22 @@ const RoutePlanner = () => {
         {/* Route Options */}
         {showResults && (
         <div className="space-y-4">
+          {/* Real Data Indicator */}
+          {routeOptions.length > 0 && routeOptions[0].realRoute && (
+            <Card className="p-4 bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800">
+              <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
+                <Database className="w-5 h-5" />
+                <span className="font-medium">Real PMPML Routes Found!</span>
+                <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                  Official Data
+                </Badge>
+              </div>
+              <p className="text-sm text-green-600 dark:text-green-500 mt-1">
+                These routes are from official PMPML bus route database (Pune Municipal Corporation)
+              </p>
+            </Card>
+          )}
+          
           {routeOptions.map((route) => (
             <Card key={route.id} className={`p-6 shadow-card hover:shadow-transport transition-all duration-300 ${route.recommended ? 'ring-2 ring-primary/20' : ''}`}>
               <div className="flex items-start justify-between mb-4">
@@ -160,7 +199,13 @@ const RoutePlanner = () => {
                   {route.recommended && (
                     <Badge className="bg-primary/10 text-primary border-primary/20">
                       <Star className="w-3 h-3 mr-1" />
-                      Recommended
+                      {route.realRoute ? "Official Route" : "Recommended"}
+                    </Badge>
+                  )}
+                  {route.realRoute && (
+                    <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                      <Database className="w-3 h-3 mr-1" />
+                      PMPML {route.pmpmlData?.routeId}
                     </Badge>
                   )}
                   <div className="flex items-center space-x-2">
@@ -213,6 +258,20 @@ const RoutePlanner = () => {
                   <span className="text-xs text-muted-foreground">Efficiency</span>
                 </div>
               </div>
+
+              {/* Route Details for Real Routes */}
+              {route.realRoute && route.pmpmlData && (
+                <div className="mt-4 p-3 bg-muted/30 rounded-lg">
+                  <div className="text-sm">
+                    <div className="font-medium text-primary mb-1">Official Route Details:</div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                      <div><strong>Route:</strong> {route.pmpmlData.description}</div>
+                      <div><strong>Distance:</strong> {route.pmpmlData.distance} km</div>
+                      <div className="md:col-span-2"><strong>मराठी:</strong> {route.pmpmlData.descriptionMarathi}</div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Route Steps */}
               <div className="space-y-2">
