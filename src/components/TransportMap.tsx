@@ -78,6 +78,70 @@ const TransportMap = () => {
       crowding: 78,
       status: "high",
       alerts: 2
+    },
+    // PCMC Region locations
+    {
+      id: 7,
+      name: "Akurdi Railway Station",
+      type: "metro",
+      coordinates: [73.7758, 18.6494] as [number, number],
+      crowding: 65,
+      status: "medium",
+      alerts: 0
+    },
+    {
+      id: 8,
+      name: "Nigdi Bus Station",
+      type: "bus",
+      coordinates: [73.7537, 18.6544] as [number, number],
+      crowding: 52,
+      status: "medium",
+      alerts: 1
+    },
+    {
+      id: 9,
+      name: "Chinchwad",
+      type: "bus",
+      coordinates: [73.8019, 18.6279] as [number, number],
+      crowding: 48,
+      status: "medium",
+      alerts: 0
+    },
+    {
+      id: 10,
+      name: "Bhosari MIDC",
+      type: "bus",
+      coordinates: [73.8430, 18.6298] as [number, number],
+      crowding: 71,
+      status: "high",
+      alerts: 1
+    },
+    {
+      id: 11,
+      name: "Pimpri Market",
+      type: "bus",
+      coordinates: [73.8067, 18.6298] as [number, number],
+      crowding: 59,
+      status: "medium",
+      alerts: 0
+    },
+    {
+      id: 12,
+      name: "Dapodi",
+      type: "bus",
+      coordinates: [73.8430, 18.6017] as [number, number],
+      crowding: 43,
+      status: "medium",
+      alerts: 0
+    },
+    {
+      id: 13,
+      name: "Ravet IT Hub",
+      type: "metro",
+      coordinates: [73.7391, 18.6477] as [number, number],
+      crowding: 76,
+      status: "high",
+      alerts: 2
     }
   ]);
 

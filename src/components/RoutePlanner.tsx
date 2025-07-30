@@ -22,8 +22,55 @@ const RoutePlanner = () => {
   const [to, setTo] = useState("");
   const [showResults, setShowResults] = useState(false);
 
+  const generateRoutes = (from: string, to: string) => {
+    // Simple route generation based on locations
+    const routeVariations = [
+      {
+        baseTime: 20 + Math.floor(Math.random() * 15),
+        baseCost: 25 + Math.floor(Math.random() * 20),
+        modes: ["metro", "bus"],
+        efficiency: 85 + Math.floor(Math.random() * 15)
+      },
+      {
+        baseTime: 25 + Math.floor(Math.random() * 20),
+        baseCost: 20 + Math.floor(Math.random() * 15),
+        modes: ["bus", "bus"],
+        efficiency: 70 + Math.floor(Math.random() * 20)
+      },
+      {
+        baseTime: 15 + Math.floor(Math.random() * 10),
+        baseCost: 35 + Math.floor(Math.random() * 25),
+        modes: ["metro"],
+        efficiency: 90 + Math.floor(Math.random() * 10)
+      }
+    ];
+
+    return routeVariations.map((variant, index) => ({
+      id: index + 1,
+      duration: `${variant.baseTime} min`,
+      cost: `₹${variant.baseCost}`,
+      crowding: Math.floor(Math.random() * 80) + 20,
+      efficiency: variant.efficiency,
+      modes: variant.modes,
+      emissions: variant.modes.includes("metro") ? "Low" : "Medium",
+      steps: variant.modes.map((mode, stepIndex) => ({
+        mode,
+        duration: `${Math.floor(variant.baseTime / variant.modes.length)} min`,
+        line: mode === "metro" 
+          ? `${["Blue", "Purple", "Green"][stepIndex % 3]} Line (${from.split(" ")[0]}-${to.split(" ")[0]})`
+          : `PMPML Route ${Math.floor(Math.random() * 50) + 1} (${from.split(" ")[0]}-${to.split(" ")[0]})`,
+        crowding: Math.floor(Math.random() * 70) + 25
+      })),
+      recommended: index === 0
+    }));
+  };
+
+  const [routeOptions, setRouteOptions] = useState([]);
+
   const handleFindRoutes = () => {
     if (from.trim() && to.trim()) {
+      const generatedRoutes = generateRoutes(from, to);
+      setRouteOptions(generatedRoutes);
       setShowResults(true);
     } else {
       alert("Please enter both start and destination locations");
@@ -34,49 +81,6 @@ const RoutePlanner = () => {
     alert(`Route ${routeId} selected! Navigation would start in a real app.`);
   };
 
-  const routeOptions = [
-    {
-      id: 1,
-      duration: "25 min",
-      cost: "₹35",
-      crowding: 42,
-      efficiency: 94,
-      modes: ["metro", "bus"],
-      emissions: "Low",
-      steps: [
-        { mode: "metro", duration: "18 min", line: "Blue Line (Vanaz to Ramwadi)", crowding: 38 },
-        { mode: "bus", duration: "7 min", line: "PMPML Route 4", crowding: 46 }
-      ],
-      recommended: true
-    },
-    {
-      id: 2,
-      duration: "35 min",
-      cost: "₹25",
-      crowding: 67,
-      efficiency: 78,
-      modes: ["bus", "bus"],
-      emissions: "Medium",
-      steps: [
-        { mode: "bus", duration: "20 min", line: "PMPML Route 15 (Swargate-Kothrud)", crowding: 72 },
-        { mode: "bus", duration: "15 min", line: "PMPML Route 8 (Deccan-Hinjewadi)", crowding: 62 }
-      ],
-      recommended: false
-    },
-    {
-      id: 3,
-      duration: "22 min",
-      cost: "₹40",
-      crowding: 28,
-      efficiency: 87,
-      modes: ["metro"],
-      emissions: "Low",
-      steps: [
-        { mode: "metro", duration: "22 min", line: "Purple Line Express (Pune Station-Hinjewadi)", crowding: 28 }
-      ],
-      recommended: false
-    }
-  ];
 
   const getModeIcon = (mode: string) => {
     switch (mode) {

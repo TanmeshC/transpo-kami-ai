@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import CrowdingDashboard from "@/components/CrowdingDashboard";
 import RoutePlanner from "@/components/RoutePlanner";
 import TransportMap from "@/components/TransportMap";
+import MLPredictions from "@/components/MLPredictions";
 
 const Index = () => {
   return (
@@ -9,6 +10,7 @@ const Index = () => {
       <Hero />
       <CrowdingDashboard />
       <RoutePlanner />
+      <MLPredictions />
       <TransportMap />
     </div>
   );
